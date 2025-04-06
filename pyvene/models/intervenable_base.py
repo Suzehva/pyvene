@@ -1948,8 +1948,9 @@ class IntervenableModel(BaseModel):
             if use_cache is not None and 'use_cache' in self.model.config.to_dict(): # for transformer models
                 model_kwargs["use_cache"] = use_cache
 
-            counterfactual_outputs = self.model(**base, **model_kwargs)
+            model_kwargs["output_hidden_states"] = True
 
+            counterfactual_outputs = self.model(**base, **model_kwargs)
             set_handlers_to_remove.remove()
 
             self._output_validation()
