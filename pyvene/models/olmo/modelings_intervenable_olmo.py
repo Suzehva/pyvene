@@ -78,7 +78,7 @@ def create_olmo(
 ):
     """Creates a OLMo Causal LM model, config, and tokenizer from the given name and revision"""
     if config is None:
-        config = AutoConfig.from_pretrained(name, cache_dir=cache_dir)
+        config = AutoConfig.from_pretrained(name, cache_dir=cache_dir, revision=revision)
         olmo = AutoModelForCausalLM.from_pretrained(
             name,
             config=config,
@@ -86,9 +86,9 @@ def create_olmo(
             torch_dtype=dtype,
             revision=revision,
         )
-        tokenizer = AutoTokenizer.from_pretrained(name, cache_dir=cache_dir)
+        tokenizer = AutoTokenizer.from_pretrained(name, cache_dir=cache_dir, revision=revision)
     else:
         olmo = AutoModelForCausalLM(config, cache_dir=cache_dir, revision=revision)
-        tokenizer = AutoTokenizer.from_pretrained(name, cache_dir=cache_dir)
-    print("loaded model")
+        tokenizer = AutoTokenizer.from_pretrained(name, cache_dir=cache_dir, revision=revision)
+    print(f"Loaded model '{name}' (revision: {revision}) with cache directory: {cache_dir}")
     return config, tokenizer, olmo
